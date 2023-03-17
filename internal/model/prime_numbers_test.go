@@ -1,6 +1,7 @@
 package model
 
 import (
+	"errors"
 	"fmt"
 	"strconv"
 	"strings"
@@ -60,4 +61,41 @@ func Test_IsPrimeNumbers(t *testing.T) {
 			assert.Equal(t, test.expected, result)
 		})
 	}
+}
+
+func Test_ParseNumbers(t *testing.T) {
+	tests := []struct {
+		a        []any
+		expected []int
+	}{
+		{[]any{0, 1, -10, -1000, 100}, []int{0, 1, -10, -1000, 100}},
+		{[]any{2, 3, 5, 7, 11.01}, []int{2, 3, 5, 7, 0}},
+		{[]any{922337203687, 922337217019, 922337217021}, []int{922337203687, 922337217019, 922337217021}},
+	}
+
+	for _, test := range tests {
+		test := test
+		testName := strings.Trim(strings.Join(strings.Split(fmt.Sprint(test.a), " "), ","), "[]")
+		t.Run(testName, func(t *testing.T) {
+			t.Parallel()
+
+			result, err := ParseNumbers(test.a)
+
+			if assert.NoError(t, err) {
+				assert.Equal(t, test.expected, result)
+			}
+		})
+	}
+}
+
+func Test_ParseNumbersError(t *testing.T) {
+	t.Parallel()
+
+	t.Run("Check ErrParse error", func(t *testing.T) {
+		_, err := ParseNumbers([]any{1, "2", 3})
+
+		if !errors.Is(err, ErrParse) {
+			t.Errorf("wrong error: %v", err)
+		}
+	})
 }

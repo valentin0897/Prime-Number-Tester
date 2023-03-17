@@ -12,8 +12,15 @@ import (
 // and returns a slice of booleans indicating whether each integer was prime or not.
 func PrimeNumbersHandler(ctx echo.Context) error {
 	jsonData := ctx.Request().Body
-	var numbers []int
-	err := json.NewDecoder(jsonData).Decode(&numbers)
+	var data []any
+
+	err := json.NewDecoder(jsonData).Decode(&data)
+
+	if err != nil {
+		return ctx.JSON(http.StatusBadRequest, map[string]string{"error": err.Error()})
+	}
+
+	numbers, err := model.ParseNumbers(data)
 
 	if err != nil {
 		return ctx.JSON(http.StatusBadRequest, map[string]string{"error": err.Error()})
