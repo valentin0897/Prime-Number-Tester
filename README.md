@@ -42,3 +42,4 @@ I used the **strategy pattern** for implementing different algorithms, which mak
 ## Technical simplifications
 
 1. I didn't create a configuration file to avoid excessive complexity, so I hard-coded port value for starting server
+2. The error message only displays the index of the first invalid input, as displaying all the indexes would not be practical when dealing with a large amount of data.
