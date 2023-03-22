@@ -51,10 +51,10 @@ func Test_PrimeNumbersHandler(t *testing.T) {
 	}
 }
 
-func Test_PrimeNumbersHandlerError(t *testing.T) {
+func Test_PrimeNumbersHandlerBadRequest(t *testing.T) {
 	t.Parallel()
 
-	t.Run("Check ErrParse error", func(t *testing.T) {
+	t.Run("Check BadRequest error", func(t *testing.T) {
 		e := echo.New()
 		e.POST("/", PrimeNumbersHandler)
 		reqBody, err := json.Marshal([]any{1, "2", 3})

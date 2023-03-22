@@ -22,7 +22,7 @@ go run ./cmd/main.go
 5. `Test the API`: You can test the API by sending a POST request to the / endpoint with a JSON body containing an array of integers. For example:
 
 ```
-curl -X POST -H "Content-Type: application/json" -d '[2, 3, 5, 7, 10]' http://localhost:5000/
+curl -X POST -H "Content-Type: application/json" -d '[2, 3, 5, 7, 10]' http://localhost:5001/
 ```
 
 ## Structure
@@ -34,10 +34,6 @@ The application is structured in a layered architecture pattern. The layers are 
 2. **rest**: This folder contains the `server` configuration where the routes and endpoints for the API are defined, along with the methods that are responsible for starting and shutting down the `server`.
 
 3. **model**: This folder contains the `business logic` layer of your application.
-
-## Extensibility
-
-I used the **strategy pattern** for implementing different algorithms, which makes it simpler if the client chooses to switch algorithms or add new endpoints for different algorithms.
 
 ## Technical simplifications
 

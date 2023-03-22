@@ -20,13 +20,11 @@ func PrimeNumbersHandler(ctx echo.Context) error {
 		return ctx.JSON(http.StatusBadRequest, map[string]string{"error": err.Error()})
 	}
 
-	numbers, err := model.ParseNumbers(data)
+	result, err := model.IsPrimeNumbers(data)
 
 	if err != nil {
 		return ctx.JSON(http.StatusBadRequest, map[string]string{"error": err.Error()})
 	}
-
-	result := model.IsPrimeNumbers(numbers)
 
 	return ctx.JSON(http.StatusOK, result)
 }
