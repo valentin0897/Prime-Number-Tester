@@ -29,8 +29,7 @@ func Test_isPrimeNumber(t *testing.T) {
 		t.Run(strconv.Itoa(test.a), func(t *testing.T) {
 			t.Parallel()
 
-			td := &TrialDivision{}
-			result := td.isPrimeNumber(test.a)
+			result := isPrimeNumber(test.a)
 
 			assert.Equal(t, test.expected, result)
 		})
@@ -56,7 +55,7 @@ func Test_IsPrimeNumbers(t *testing.T) {
 		t.Run("Trial Division: "+testName, func(t *testing.T) {
 			t.Parallel()
 
-			result := IsPrimeNumbers(&TrialDivision{}, test.a)
+			result := IsPrimeNumbers(test.a)
 
 			assert.Equal(t, test.expected, result)
 		})

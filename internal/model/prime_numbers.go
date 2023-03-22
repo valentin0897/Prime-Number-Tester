@@ -4,19 +4,11 @@ import (
 	"errors"
 	"fmt"
 	"math"
-	"math/big"
 )
 
 var ErrParse = errors.New("the given input is invalid")
 
-type PrimeChecker interface {
-	isPrimeNumber(num int) bool
-}
-
-type TrialDivision struct {
-}
-
-func (*TrialDivision) isPrimeNumber(n int) bool {
+func isPrimeNumber(n int) bool {
 	if n < 2 {
 		return false
 	}
@@ -29,21 +21,13 @@ func (*TrialDivision) isPrimeNumber(n int) bool {
 	return true
 }
 
-type MillerRabin struct {
-}
-
-func (*MillerRabin) isPrimeNumber(n int) bool {
-	num := big.NewInt(int64(n))
-	return num.ProbablyPrime(15)
-}
-
 // IsPrimeNumbers takes a slice of integers and returns a slice of booleans indicating
 // whether each integer in the input slice is prime or not.
-func IsPrimeNumbers(alg PrimeChecker, numbers []int) []bool {
+func IsPrimeNumbers(numbers []int) []bool {
 	result := make([]bool, len(numbers))
 
 	for i, v := range numbers {
-		result[i] = alg.isPrimeNumber(v)
+		result[i] = isPrimeNumber(v)
 	}
 
 	return result

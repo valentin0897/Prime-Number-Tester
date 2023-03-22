@@ -26,8 +26,7 @@ func PrimeNumbersHandler(ctx echo.Context) error {
 		return ctx.JSON(http.StatusBadRequest, map[string]string{"error": err.Error()})
 	}
 
-	algorithm := &model.TrialDivision{}
-	result := model.IsPrimeNumbers(algorithm, numbers)
+	result := model.IsPrimeNumbers(numbers)
 
 	return ctx.JSON(http.StatusOK, result)
 }
