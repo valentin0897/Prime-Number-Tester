@@ -15,13 +15,13 @@ import (
 
 func Test_PrimeNumbersHandler(t *testing.T) {
 	tests := []struct {
-		a        []int
+		a        []any
 		expected []bool
 	}{
-		{[]int{0, 1, -10, -2, -2000}, []bool{false, false, false, false, false}},
-		{[]int{2, 3, 17, 13}, []bool{true, true, true, true}},
-		{[]int{999999000001, 999999000002}, []bool{true, false}},
-		{[]int{}, []bool{}},
+		{[]any{0, 1, -10, -2, -2000}, []bool{false, false, false, false, false}},
+		{[]any{0.0, 4.0, 3.2, 17.0, -13.1}, []bool{false, false, false, true, false}},
+		{[]any{999999000001, 999999000002}, []bool{true, false}},
+		{[]any{}, []bool{}},
 	}
 
 	for _, test := range tests {
@@ -49,5 +49,25 @@ func Test_PrimeNumbersHandler(t *testing.T) {
 		})
 
 	}
+}
 
+func Test_PrimeNumbersHandlerError(t *testing.T) {
+	t.Parallel()
+
+	t.Run("Check ErrParse error", func(t *testing.T) {
+		e := echo.New()
+		e.POST("/", PrimeNumbersHandler)
+		reqBody, err := json.Marshal([]any{1, "2", 3})
+
+		assert.NoError(t, err)
+
+		req := httptest.NewRequest(http.MethodPost, "/", bytes.NewBuffer(reqBody))
+		req.Header.Set(echo.HeaderContentType, echo.MIMEApplicationJSON)
+
+		rec := httptest.NewRecorder()
+
+		e.ServeHTTP(rec, req)
+
+		assert.Equal(t, http.StatusBadRequest, rec.Code)
+	})
 }
