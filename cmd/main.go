@@ -27,18 +27,19 @@ func main() {
 	quit := make(chan os.Signal, 1)
 	signal.Notify(quit, os.Interrupt, syscall.SIGTERM, syscall.SIGINT)
 
-shutdown:
-	for {
-		select {
-		case v := <-quit:
-			srv.Echo.Logger.Errorf("program was interrupted: %v", v)
-			break shutdown
-
-		case serverError := <-done:
-			srv.Echo.Logger.Errorf("something went wrong while starting the server: %v", serverError)
-			break shutdown
-		}
-	}
+	handleShutdown(srv, quit, done)
 
 	srv.GracefulShutdown(ctx)
+}
+
+func handleShutdown(srv *server.Server, quit <-chan os.Signal, done <-chan error) {
+	select {
+	case q := <-quit:
+		srv.Echo.Logger.Errorf("program was interrupted: %v", q)
+		return
+
+	case serverError := <-done:
+		srv.Echo.Logger.Errorf("something went wrong while starting the server: %v", serverError)
+		return
+	}
 }
