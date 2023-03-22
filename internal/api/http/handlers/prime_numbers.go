@@ -8,7 +8,7 @@ import (
 	"github.com/labstack/echo"
 )
 
-// HTTP request handler checks if each integer is prime or not using the IsPrimeNumbers function from the model package,
+// PrimeNumberHander is HTTP request handler checks if each integer is prime or not using the IsPrimeNumbers function from the model package,
 // and returns a slice of booleans indicating whether each integer was prime or not.
 func PrimeNumbersHandler(ctx echo.Context) error {
 	jsonData := ctx.Request().Body

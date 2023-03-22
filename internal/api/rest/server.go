@@ -31,7 +31,7 @@ func (s *Server) Start() {
 	s.Echo.Start(":5000")
 }
 
-// Gracefully shutdown the server
+// GracefulShutdown is gracefully shutdown the server
 func (s *Server) GracefulShutdown(ctx context.Context) {
 	s.Echo.Shutdown(ctx)
 }
