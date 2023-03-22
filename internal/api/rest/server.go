@@ -26,7 +26,9 @@ func NewServer() *Server {
 	return server
 }
 
-// Start starts the Echo HTTP server on port 5000
+// Start launches the Echo HTTP server on port 5000
+//
+// If something went wrong while starting the server: sends error through channel
 func (s *Server) Start(port string, errorCh chan<- error) {
 	err := s.Echo.Start(port)
 	errorCh <- err
