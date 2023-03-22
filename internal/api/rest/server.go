@@ -27,8 +27,9 @@ func NewServer() *Server {
 }
 
 // Start starts the Echo HTTP server on port 5000
-func (s *Server) Start() {
-	s.Echo.Start(":5001")
+func (s *Server) Start(port string, errorCh chan<- error) {
+	err := s.Echo.Start(port)
+	errorCh <- err
 }
 
 // GracefulShutdown is gracefully shutdown the server

@@ -2,10 +2,15 @@ package main
 
 import (
 	"context"
+	"flag"
 	"os"
 	"os/signal"
 	server "primes/internal/api/rest"
 	"syscall"
+)
+
+var (
+	port = flag.String("port", ":5001", "server port")
 )
 
 func main() {
@@ -13,8 +18,10 @@ func main() {
 
 	ctx := context.TODO()
 
+	done := make(chan error)
+
 	go func() {
-		srv.Start()
+		srv.Start(*port, done)
 	}()
 
 	quit := make(chan os.Signal, 1)
@@ -26,8 +33,9 @@ shutdown:
 		case v := <-quit:
 			srv.Echo.Logger.Errorf("program was interrupted: %v", v)
 			break shutdown
-		case done := <-ctx.Done():
-			srv.Echo.Logger.Errorf("context was cancelled: %v", done)
+
+		case serverError := <-done:
+			srv.Echo.Logger.Errorf("something went wrong while starting the server: %v", serverError)
 			break shutdown
 		}
 	}
