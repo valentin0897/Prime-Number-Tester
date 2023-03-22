@@ -43,7 +43,7 @@ func Test_IsPrimeNumbers(t *testing.T) {
 	}{
 		{[]any{0, 1, -10, -1000, 100}, []bool{false, false, false, false, false}},
 		{[]any{2, 3, 5, 7, 11, 13, 17, 19, 23, 29}, []bool{true, true, true, true, true, true, true, true, true, true}},
-		{[]any{997, 983, 977, 971, 967}, []bool{true, true, true, true, true}},
+		{[]any{997.23, 983.17, 977.01, 971.0, 967.1}, []bool{false, false, false, true, false}},
 		{[]any{8191, 131071, 524287, 6700417, 2147483647}, []bool{true, true, true, true, true}},
 		{[]any{999999000001, 67280421310721}, []bool{true, true}},
 		{[]any{922337203687, 922337217019, 922337217021}, []bool{true, true, false}},
