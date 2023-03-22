@@ -14,6 +14,8 @@ var (
 )
 
 func main() {
+	flag.Parse()
+
 	srv := server.NewServer()
 
 	ctx := context.TODO()
